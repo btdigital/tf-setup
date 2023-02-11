@@ -45,6 +45,7 @@ jobs:
     permissions:
       contents: 'read'
       id-token: 'write'
+      pull-requests: 'read'
     strategy:
       fail-fast: false
       matrix:
