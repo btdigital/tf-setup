@@ -65,10 +65,11 @@ jobs:
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v1'
-
+        env:
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         with:
-          workload_identity_provider: 'projects/157381548024/locations/global/workloadIdentityPools/lambda-pool-auth/providers/gh-oidc-provider'
-          service_account: "lambda-arch-project@lambda-377114.iam.gserviceaccount.com"
+          workload_identity_provider: ${{ secrets.PROVIDER_NAME }}
+          service_account: ${{ secrets.SA_EMAIL }}
       - id: 'list-buckets-contents'
         run: |-
           curl -sSf https://storage.googleapis.com/storage/v1/b/iodc-keystore/o \
