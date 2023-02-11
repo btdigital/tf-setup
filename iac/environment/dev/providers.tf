@@ -3,7 +3,7 @@ provider "google" {
   region  = var.region
 }
 
-default_tags {
+label {
     tags = {
     Environment = "dev"
     ManagedBy   = "terraform"
