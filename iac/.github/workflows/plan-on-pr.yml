@@ -1,10 +1,9 @@
 name: Plan / Test On PR
 
 on:
-  push:
-    branches: [ "local" ]
   pull_request:
     branches:
+    - "local"
     - "dev"
     paths:
     - 'iac/**'
