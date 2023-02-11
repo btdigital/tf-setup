@@ -3,6 +3,7 @@ name: Plan / Apply On Merge
 on:
   push:
     branches:
+    - "dev"
     - "main"
     paths:
     - 'iac/**'
