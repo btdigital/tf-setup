@@ -70,10 +70,6 @@ jobs:
           version: "latest"
           workload_identity_provider: 'projects/157381548024/locations/global/workloadIdentityPools/lambda-pool-auth/providers/gh-oidc-provider'
           service_account: "lambda-arch-project@lambda-377114.iam.gserviceaccount.com"
-      - id: 'list-buckets-contents'
-        run: |-
-          curl -sSf https://storage.googleapis.com/storage/v1/b/iodc-keystore/o \
-          --header "Authorization: Bearer ${{ steps.auth.outputs.access_token }}"
           
       - name: Initialize Terraform
         run: |
