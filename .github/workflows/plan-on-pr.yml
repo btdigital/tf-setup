@@ -70,11 +70,11 @@ jobs:
         with:
           workload_identity_provider: 'projects/157381548024/locations/global/workloadIdentityPools/lambda-pool-auth/providers/gh-oidc-provider'
           service_account: 'github_actions_sa@${{ secrets.PROJECT_ID }}.iam.gserviceaccount.com'
-          
-      - id: 'list-buckets-contents'
-        run: |-
-          curl -sSf https://storage.googleapis.com/storage/v1/b/iodc-keystore/o \
-          --header "Authorization: Bearer ${{ steps.auth.outputs.access_token }}"
+          token_format: 'access_token'
+          access_token_lifetime: '300s'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
           
       - name: Initialize Terraform
         run: |
