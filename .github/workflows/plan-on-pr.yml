@@ -68,8 +68,9 @@ jobs:
         env:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         with:
-          workload_identity_provider: 'projects/157381548024/locations/global/workloadIdentityPools/lambda-pool-auth/providers/gh-oidc-provider'
-          service_account: 'github_actions_sa@lambda-377114.iam.gserviceaccount.com'
+          version: "latest"
+          workload_identity_provider: ${{ secrets.PROVIDER_NAME }}
+          service_account: ${{ secrets.SA_EMAIL }}
           token_format: 'access_token'
           access_token_lifetime: '300s'
 
