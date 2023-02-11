@@ -21,7 +21,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./environment
+        working-directory: iac/**
 
     steps:
       - name: Inform on PR that Apply is Running
