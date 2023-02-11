@@ -4,11 +4,11 @@ on:
   push:
     branches: [ "local" ]
     paths:
-    - iac/**
+    - iac/environment/*
   pull_request:
     branches: [ "dev" ]     
     paths:
-    - iac/**
+    - iac/environment/*
 
 concurrency: 
   group: ${{ github.action == 'Google Cloud IaC Create Resources' }}
@@ -33,7 +33,7 @@ jobs:
           terraform_version: 1.0.9
 
       - name: Run terraform fmt check
-        run: terraform fmt -check -diff -recursive ./environment/
+        run: terraform fmt -check -diff -recursive iac/environment/*
 
   plan:
     name: Plan
