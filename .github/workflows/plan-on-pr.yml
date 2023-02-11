@@ -68,11 +68,12 @@ jobs:
         with:
           workload_identity_provider: '${{ secrets.WIF_PROVIDER_NAME }}'   
           service_account: 'github_actions_sa@${ PROJECT_ID }.iam.gserviceaccount.com'
-      - id: 'list-buckets-contents'
-        run: |-
-          curl -sSf https://storage.googleapis.com/storage/v1/b/iodc-keystore/o \
-          --header "Authorization: Bearer ${{ steps.auth.outputs.access_token }}"
-
+          token_format: 'access_token'
+          access_token_lifetime: '300s'
+          
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+      
       - name: Initialize Terraform
         run: |
           cd terraform/${{ matrix.path }}
