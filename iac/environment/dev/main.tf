@@ -1,8 +1,5 @@
 terraform {
   required_version = ">= 1.0"
-  backend "gcs" {
-    bucket = "tfstate-data-bkt"
-  }
 
   required_providers {
     google = {
@@ -11,6 +8,7 @@ terraform {
     }
   }
 }
+
 
 # Google Compute Engine: VM
 # Ref: https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance
