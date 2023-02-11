@@ -67,7 +67,7 @@ jobs:
         uses: 'google-github-actions/auth@v0'
         with:
           workload_identity_provider: ${{ secrets.PROVIDER_NAME }}
-          service_account: ${{ secrets.SA_EMAIL }}
+          service_account: 'github_actions_sa@${ PROJECT_ID }.iam.gserviceaccount.com'
           
       - id: 'list-buckets-contents'
         run: |-
