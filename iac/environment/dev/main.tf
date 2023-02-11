@@ -2,7 +2,6 @@ terraform {
   required_version = ">= 1.0"
   backend "gcs" {
     bucket = "tfstate-data-bkt"
-    region = "europe-west6"
   }
 
   required_providers {
