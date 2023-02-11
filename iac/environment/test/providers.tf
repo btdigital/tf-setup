@@ -3,10 +3,10 @@ provider "google" {
   region  = var.region
 }
 
-  default_tags {
+default_tags {
     tags = {
-      Environment = "test"
-      ManagedBy   = "terraform"
-      Repo        = "https://github.com/btdigital/tf-setup"
+    Environment = "test"
+    ManagedBy   = "terraform"
+    Repo        = "https://github.com/btdigital/tf-setup"
     }
   }
