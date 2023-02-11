@@ -17,13 +17,13 @@ terraform {
 # Google Compute Engine: VM
 # Ref: https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance
 module "vm_service" {
-  source = "./modules/google_compute_module"
+  source = "../../modules/google_compute_module"
 }
 
 # Cloud Composer Environment
 # Ref: https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/composer_environment
 module "cloud-composer" {
-  source     = "./modules/cloud_composer_module"
+  source     = "../../modules/cloud_composer_module"
   count      = local.cloud_composer_enabled
   project_id = local.project_id
   region     = var.region
@@ -42,7 +42,7 @@ resource "random_id" "bucket" {
 }
 
 module "gcs_bucket" {
-  source                       = "./modules/cloud_storage_module"
+  source                       = "../../modules/cloud_storage_module"
   for_each                     = var.gcs_buckets
   location                     = each.key
   project                      = var.project
@@ -59,5 +59,5 @@ module "gcs_bucket" {
 # Data ware house : DWH
 # Ref: https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/bigquery_dataset
 module "bq_dataset" {
-  source = "./modules/bq_warehouse_module"
+  source = "../../modules/bq_warehouse_module"
 }
