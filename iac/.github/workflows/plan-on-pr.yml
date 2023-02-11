@@ -1,9 +1,11 @@
 name: Plan / Test On PR
 
 on:
+  push:
+    branches: [ "local" ]
   pull_request:
     branches:
-      - main
+    - "dev"
     paths:
     - 'iac/**'
 
@@ -19,7 +21,7 @@ defaults:
 jobs:
   lint:
     name: Lint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     permissions:
       contents: 'read'
       id-token:  'write'
@@ -34,7 +36,7 @@ jobs:
           terraform_version: 1.0.9
 
       - name: Run terraform fmt check
-        run: terraform fmt -check -diff -recursive ./terraform
+        run: terraform fmt -check -diff -recursive iac/**
 
   plan:
     name: Plan
