@@ -4,6 +4,17 @@ on:
   push:
     branches:
       - main
+    paths:
+    - 'iac/**'
+
+concurrency: 
+  group: ${{ github.action == 'Google Cloud IaC Create Resources' }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+    working-directory: ./iac
 
 jobs:
   inform_about_apply:
