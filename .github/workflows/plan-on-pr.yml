@@ -70,7 +70,7 @@ jobs:
         with:
           version: "latest"
           workload_identity_provider: 'projects/157381548024/locations/global/workloadIdentityPools/lambda-pool-auth/providers/gh-oidc-provider'
-          service_account: ${{ secrets.SA_KEY }}
+          service_account: ${{ secrets.WIF_PROVIDER_NAME }}
           token_format: 'access_token'
           access_token_lifetime: '300s'
 
