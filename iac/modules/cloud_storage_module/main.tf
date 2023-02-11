@@ -1,6 +1,6 @@
 resource "google_storage_bucket" "bucket" {
-  count                       = "${length(var.name)}"
-  name                        = "${var.name[count.index]}"
+  for_each                    = toset(var.name)
+  name                        = each.value
   location                    = var.location
   force_destroy               = true
   uniform_bucket_level_access = true
@@ -66,8 +66,7 @@ locals {
 
 resource "google_storage_bucket_iam_member" "admin-member-bucket-internal" {
   for_each = toset(local.internal_roles_fully_qualified_admin.objectAdmin.service_accounts)
-  count    = "${length(var.name)}"
-  name     = "${var.name[count.index]}"
+  name     = each.value
   role     = "roles/storage.objectAdmin"
   member   = each.value
   depends_on = [
@@ -77,8 +76,7 @@ resource "google_storage_bucket_iam_member" "admin-member-bucket-internal" {
 
 resource "google_storage_bucket_iam_member" "viewer-member-bucket-internal" {
   for_each = toset(local.internal_roles_fully_qualified_viewer.objectViewer.service_accounts)
-  count    = "${length(var.name)}"
-  name     = "${var.name[count.index]}"
+  name     = each.value
   role     = "roles/storage.objectViewer"
   member   = each.value
   depends_on = [
@@ -88,8 +86,7 @@ resource "google_storage_bucket_iam_member" "viewer-member-bucket-internal" {
 
 resource "google_storage_bucket_iam_member" "creator-member-bucket-internal" {
   for_each = toset(local.internal_roles_fully_qualified_creator.objectCreator.service_accounts)
-  count    = "${length(var.name)}"
-  name     = "${var.name[count.index]}"
+  name     = each.value
   role     = "roles/storage.objectCreator"
   member   = each.value
   depends_on = [
@@ -99,8 +96,7 @@ resource "google_storage_bucket_iam_member" "creator-member-bucket-internal" {
 
 resource "google_storage_bucket_iam_member" "storage-member-bucket-internal" {
   for_each = toset(local.internal_roles_fully_qualified_storage.admin.service_accounts)
-  count    = "${length(var.name)}"
-  name     = "${var.name[count.index]}"
+  name     = each.value
   role     = "roles/storage.admin"
   member   = each.value
   depends_on = [
