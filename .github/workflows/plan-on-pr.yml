@@ -111,7 +111,7 @@ jobs:
   slack_notification:
     name: 'Slack Notification'
     runs-on: ubuntu-latest
-    needs: [terraform_plan, terraform_apply]
+    needs: [Plan]
     if: always()
 
     steps:
