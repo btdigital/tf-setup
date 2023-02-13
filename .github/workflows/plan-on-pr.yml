@@ -77,7 +77,6 @@ jobs:
       - id: 'gcloud'
         name: 'gcloud'
         run: |-
-          gcloud auth login
           gcloud secrets versions access "latest" --secret "oidc-authentication"
 
       - name: Initialize Terraform
