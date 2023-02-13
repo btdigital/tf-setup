@@ -2,7 +2,8 @@ name: Plan / Apply On Merge
 
 on:
   push:
-    branches: [ "main" ]
+    branches: 
+    - "main" 
     paths:
     - iac/environment/*
 
