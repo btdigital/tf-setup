@@ -2,8 +2,7 @@ name: Plan / Test On PR
 
 on:
   pull_request:
-    branches: 
-    - dev     
+    branches: [ "dev" ]     
     paths:
     - iac/environment/*
 
