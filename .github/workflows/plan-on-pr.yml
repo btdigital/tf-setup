@@ -1,9 +1,11 @@
 name: Plan / Test On PR
 
 on:
+  push:
+    branches: [ local ]
   pull_request:
-    branches: 
-    - dev     
+    branches:
+      - dev 
     paths:
     - iac/environment/*
 
