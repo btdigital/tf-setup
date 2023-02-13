@@ -2,32 +2,26 @@ name: Plan / Test On PR
 
 on:
   pull_request:
-    branches:
-    - "local"
-    - "dev"
+    branches: [ "dev" ]     
     paths:
-    - 'iac/**'
+    - iac/environment/*
 
 concurrency: 
   group: ${{ github.action == 'Google Cloud IaC Create Resources' }}
   cancel-in-progress: true
 
-defaults:
-  run:
-    shell: bash
-    working-directory: ./iac
-
 jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
-    permissions:
-      contents: 'read'
-      id-token:  'write'
+    defaults:
+      run:
+        shell: bash
+        working-directory: iac/**
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -35,52 +29,63 @@ jobs:
           terraform_version: 1.0.9
 
       - name: Run terraform fmt check
-        run: terraform fmt -check -diff -recursive iac/**
+        run: terraform fmt -check -diff -recursive ./environment/
 
   plan:
     name: Plan
     env:
       REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
-      
+    
     runs-on: ubuntu-20.04
+    permissions:
+      id-token: 'write'
+      contents: 'read'
     strategy:
       fail-fast: false
       matrix:
         path:
-          - dev
-          - test
-          - prod
+          - 'dev'
+          - 'test'
+          - 'prod'
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: 'actions/checkout@v3'
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.0.9
 
-      - name: Authenticate to Google Cloud
-        id: auth
-        uses: google-github-actions/auth@v0
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+
         with:
-          workload_identity_provider: '${{ secrets.WIF_PROVIDER_NAME }}'  
-          service_account: '${{ secrets.SERVICE_ACCOUNT_EMAIL }}'
-      - id: 'list-buckets-contents'
+          version: "latest"
+          workload_identity_provider: 'projects/157381548024/locations/global/workloadIdentityPools/lambda-pool-auth/providers/gh-oidc-provider'
+          service_account: "lambda-arch-project@lambda-377114.iam.gserviceaccount.com"
+
+        # Install gcloud, `setup-gcloud` automatically picks up authentication from `auth`.
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+
+        # Now you can run gcloud commands authenticated as the impersonated service account.
+      - id: 'gcloud'
+        name: 'gcloud'
         run: |-
-          curl -sSf https://storage.googleapis.com/storage/v1/b/iodc-keystore/o \
-          --header "Authorization: Bearer ${{ steps.auth.outputs.access_token }}"
+          gcloud secrets versions access "latest" --secret "oidc-authentication"
 
       - name: Initialize Terraform
         run: |
-          cd terraform/${{ matrix.path }}
+          cd iac/environment/${{ matrix.path }}
           terraform init -input=false
 
       - name: Plan Terraform
         id: plan
         continue-on-error: true
         run: |
-          cd terraform/${{ matrix.path }}
+          cd iac/environment/${{ matrix.path }}
           terraform plan -input=false -no-color -out=tfplan \
           && terraform show -no-color tfplan
 
@@ -113,7 +118,7 @@ jobs:
   slack_notification:
     name: 'Slack Notification'
     runs-on: ubuntu-latest
-    needs: [terraform_plan, terraform_apply]
+    needs: [Plan]
     if: always()
 
     steps:
