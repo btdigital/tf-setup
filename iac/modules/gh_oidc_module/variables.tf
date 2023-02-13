@@ -29,7 +29,7 @@ variable "repo" {
 variable "pool_id" {
   type        = string
   description = "Workload Identity Pool ID"
-  default     = "lambda-pool"
+  default     = "lambda-pool-auth"
 }
 
 variable "pool_display_name" {
