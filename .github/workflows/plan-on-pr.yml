@@ -17,10 +17,6 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: iac/environment/*
 
     steps:
       - name: Check out code
