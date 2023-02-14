@@ -11,7 +11,7 @@ terraform {
 
 
 module "oidc" {
-  source      = "../../modules/gh-oidc_module"
+  source      = "../../modules/gh_oidc_module"
   project_id  = var.project_id
   pool_id     = var.pool_id
   provider_id = var.provider_id
