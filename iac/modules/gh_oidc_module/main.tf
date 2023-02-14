@@ -68,7 +68,7 @@ resource "google_iam_workload_identity_pool_provider" "oidc" {
     }
   }
   oidc {
-    allowed_audiences = var.allowed_audiences
+    allowed_audiences = ["google-wif"]
     issuer_uri        = var.issuer_uri
   }
 }
