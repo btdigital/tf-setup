@@ -20,7 +20,7 @@ variable "project_id" {
   default     = "lambda-377114"
 }
 
-variable "repo" {
+variable "gh_repo" {
   type        = string
   description = "The project repo to create Workload Identity Pool"
   default     = "https://github.com/btdigital/tf-setup"

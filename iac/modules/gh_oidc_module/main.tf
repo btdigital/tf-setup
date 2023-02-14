@@ -15,7 +15,7 @@
  */
 
 resource "google_iam_workload_identity_pool" "github_oidc" {
-  provider                  = google-beta
+  provider                  =var.provider_display_name
   project                   = var.project_id
   workload_identity_pool_id = var.pool_id
   display_name              = var.pool_display_name
@@ -24,7 +24,7 @@ resource "google_iam_workload_identity_pool" "github_oidc" {
 }
 
 resource "google_iam_workload_identity_pool_provider" "oidc" {
-  provider                           = google-beta
+  provider                           = var.provider_display_name
   project                            = var.project_id
   workload_identity_pool_id          = google_iam_workload_identity_pool.main.workload_identity_pool_id
   workload_identity_pool_provider_id = var.provider_id
@@ -38,21 +38,27 @@ resource "google_iam_workload_identity_pool_provider" "oidc" {
   }
 }
 
-resource "google_service_account_iam_member" "wif-sa" {
-  for_each           = var.sa_mapping
-  service_account_id = each.value.sa_name
-  role               = "roles/iam.workloadIdentityUser"
-  member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.main.name}/${each.value.attribute}"
+resource "google_service_account" "runner_sa" {
+  project      = var.project_id
+  account_id   = "gh-runner"
+  display_name = "Service Account"
 }
 
-resource "google_service_account" "sa" {
-  project    = var.project_id
-  account_id = "gh-runner"
-  display_name = "Service Account used for GitHub Actions"
+data "google_project" "project" {
+  project_id = var.project_id
 }
 
-resource "google_project_iam_member" "project" {
-  project = var.project_id
-  role    = "roles/storage.admin"
-  member  = "serviceAccount:${google_service_account.sa.email}"
+data "google_iam_policy" "wli_user_ghshr" {
+  binding {
+    role = "roles/iam.workloadIdentityUser"
+
+    members = [
+      "principalSet://iam.googleapis.com/projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/lambda-pool-auth/attribute.full/${var.gh_repo}${var.gh_branch}",
+    ]
+  }
+}
+
+resource "google_service_account_iam_policy" "admin-account-iam" {
+  service_account_id = google_service_account.runner_sa.name
+  policy_data        = data.google_iam_policy.wli_user_ghshr.policy_data
 }
