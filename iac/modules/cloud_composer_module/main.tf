@@ -9,7 +9,7 @@ resource "google_project_service" "cloud-composer" {
   disable_dependent_services = true
 }
 
-resource "google_project_service" "iamcredentials" {
+resource "google_project_service" "iam" {
   project                    = var.project_id
   service                    = "iam.googleapis.com"
   disable_dependent_services = true
