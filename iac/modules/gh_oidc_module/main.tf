@@ -15,7 +15,7 @@
  */
 
 resource "google_iam_workload_identity_pool" "github_oidc" {
-  provider                  =var.provider_display_name
+  provider                  = google-beta
   project                   = var.project_id
   workload_identity_pool_id = var.pool_id
   display_name              = var.pool_display_name
@@ -24,7 +24,7 @@ resource "google_iam_workload_identity_pool" "github_oidc" {
 }
 
 resource "google_iam_workload_identity_pool_provider" "oidc" {
-  provider                           = var.provider_display_name
+  provider                           = google-beta
   project                            = var.project_id
   workload_identity_pool_id          = google_iam_workload_identity_pool.main.workload_identity_pool_id
   workload_identity_pool_provider_id = var.provider_id
