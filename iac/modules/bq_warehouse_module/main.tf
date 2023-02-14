@@ -17,7 +17,7 @@ resource "google_bigquery_dataset" "bq_raw_staging" {
     domain = "hashicorp.com"
   }
 }
-resource "google_service_account" "bqowner" {
+resource "google_service_account" "bq_raw" {
   account_id = "bqowner"
 }
 
@@ -40,7 +40,7 @@ resource "google_bigquery_dataset" "bq_dev_dwh" {
     domain = "hashicorp.com"
   }
 }
-resource "google_service_account" "bqowner" {
+resource "google_service_account" "bq_dev" {
   account_id = "bqowner"
 }
 
@@ -63,6 +63,6 @@ resource "google_bigquery_dataset" "bq_test_dwh" {
     domain = "hashicorp.com"
   }
 }
-resource "google_service_account" "bqowner" {
+resource "google_service_account" "bq_test" {
   account_id = "bqowner"
 }
