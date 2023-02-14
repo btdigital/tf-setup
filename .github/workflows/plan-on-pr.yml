@@ -91,14 +91,14 @@ jobs:
 
       - name: Initialize Terraform
         run: |
-          cd iac/environment/${{ matrix.path }}
+          cd ./iac/environment/${{ matrix.path }}
           terraform init -input=false
 
       - name: Plan Terraform
         id: plan
         continue-on-error: true
         run: |
-          cd .iac/environment/${{ matrix.path }}
+          cd ./iac/environment/${{ matrix.path }}
           terraform plan -input=false -no-color -out=tfplan \
           && terraform show -no-color tfplan
 
