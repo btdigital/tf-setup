@@ -37,9 +37,9 @@ jobs:
       fail-fast: false
       matrix:
         path:
-          - 'dev'
-          - 'test'
-          - 'prod'
+          - dev
+          - test
+          - prod
 
     steps:
       - name: Checkout the repository to the runner
