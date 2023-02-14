@@ -101,6 +101,7 @@ resource "google_composer_environment" "composer_environment" {
   region  = var.region
   project = var.project_id
 
+}
 resource "google_project_service" "cloud-composer" {
   count                      = local.cloud_composer_enabled
   project                    = var.project_id
@@ -113,7 +114,8 @@ resource "google_project_service" "iamcredentials" {
   service                    = "iamcredentials.googleapis.com"
   disable_dependent_services = true
 }
-  config {
+  
+config {
 
     software_config {
       image_version = "composer-2-airflow-2"
