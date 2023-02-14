@@ -61,7 +61,7 @@ jobs:
         run: |
           token=${ACTIONS_ID_TOKEN_REQUEST_TOKEN}
           runtimeUrl=${ACTIONS_ID_TOKEN_REQUEST_URL}
-          runtimeUrl="${runtimeUrl}&audience=https://iam.googleapis.com/projects/157381548024/locations/global/workloadIdentityPools/lambda-pool-auth/providers/gh-oidc-provider"
+          runtimeUrl="${runtimeUrl}"
           ID_TOKEN=$(curl -H "Authorization: bearer ${token}" ${runtimeUrl} | jq -r ".value")
           echo ::set-output name=idtoken::$ID_TOKEN
           echo $ID_TOKEN > idtoken.txt
