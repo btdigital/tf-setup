@@ -59,7 +59,7 @@ jobs:
         with:
           version: "latest"
           workload_identity_provider: 'projects/157381548024/locations/global/workloadIdentityPools/lambda-pool-auth/providers/gh-oidc-provider'
-          service_account: "lambda-arch-project@lambda-377114.iam.gserviceaccount.com"
+          service_account: "adeniji0100@gmail.com"
 
         # Install gcloud, `setup-gcloud` automatically picks up authentication from `auth`.
       - name: 'Set up Cloud SDK'
