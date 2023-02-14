@@ -10,7 +10,7 @@ resource "google_bigquery_dataset" "bq_raw_staging" {
   }
   access {
     role          = "OWNER"
-    user_by_email = "serviceAccount:${v}@${var.project_id}.iam.gserviceaccount.com"
+    user_by_email = google_service_account.bqowner.email
   }
   access {
     role   = "READER"
@@ -30,7 +30,7 @@ resource "google_bigquery_dataset" "bq_dev_dwh" {
   }
   access {
     role          = "OWNER"
-    user_by_email = "serviceAccount:${v}@${var.project_id}.iam.gserviceaccount.com"
+    user_by_email = google_service_account.bqowner.email
   }
   access {
     role   = "READER"
@@ -56,4 +56,8 @@ resource "google_bigquery_dataset" "bq_test_dwh" {
     role   = "READER"
     domain = "hashicorp.com"
   }
+}
+
+resource "google_service_account" "bqowner" {
+  account_id = "bqowner"
 }
