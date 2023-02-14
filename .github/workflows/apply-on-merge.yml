@@ -16,9 +16,6 @@ jobs:
   inform_about_apply:
     name: Inform About Apply
     runs-on: ubuntu-20.04
-    permissions:
-      id-token: 'write'
-      contents: 'read'
     steps:
       - name: Inform on PR that Apply is Running
         uses: mshick/add-pr-comment@v1
@@ -32,9 +29,11 @@ jobs:
   plan_and_apply:
     name: Plan and Apply
     env:
-      REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
-  
+      REPO_TOKEN: ${{ secrets.REPO_TOKEN }}  
     runs-on: ubuntu-20.04
+    permissions:
+      id-token: 'write'
+      contents: 'read'
     strategy:
       fail-fast: false
       matrix:
@@ -44,14 +43,6 @@ jobs:
           - "prod"
 
     steps:
-      - name: Check out code
-        uses: 'actions/checkout@v2'
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: 1.0.9
-
       - shell: bash
         run: echo ${ACTIONS_ID_TOKEN_REQUEST_URL} > url.txt
       - shell: bash

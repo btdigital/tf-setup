@@ -7,7 +7,7 @@ on:
     branches:
       - main
     paths:
-    - iac/environment/*
+    - ./iac/environment/*
 
 concurrency: 
   group: ${{ github.action == 'Google Cloud IaC Create Resources' }}
@@ -98,7 +98,7 @@ jobs:
         id: plan
         continue-on-error: true
         run: |
-          cd environment/${{ matrix.path }}
+          cd .iac/environment/${{ matrix.path }}
           terraform plan -input=false -no-color -out=tfplan \
           && terraform show -no-color tfplan
 
