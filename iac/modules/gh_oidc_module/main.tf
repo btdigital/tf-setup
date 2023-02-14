@@ -44,10 +44,6 @@ resource "google_service_account" "runner_sa" {
   display_name = "Service Account"
 }
 
-data "google_project" "project" {
-  project_id = var.project_id
-}
-
 data "google_iam_policy" "wli_user_ghshr" {
   binding {
     role = "roles/iam.workloadIdentityUser"
