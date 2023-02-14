@@ -80,7 +80,7 @@ jobs:
               -H 'Content-Type: text/json; charset=utf-8' \
               -d @- <<EOF | jq -r .access_token
               {
-                  "audience"           : "//iam.googleapis.com/projects/${{ secrets.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/gh-pool/providers/gh-provider",
+                  "audience"           : "//iam.googleapis.com/projects/${{ secrets.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/lambda-pool-auth/providers/gh-oidc-provider",
                   "grantType"          : "urn:ietf:params:oauth:grant-type:token-exchange",
                   "requestedTokenType" : "urn:ietf:params:oauth:token-type:access_token",
                   "scope"              : "https://www.googleapis.com/auth/cloud-platform",
@@ -105,11 +105,9 @@ jobs:
           echo ::set-output name=access_token::$ACCESS_TOKEN
       - name: 'Access secret'
         run: |-
-          curl https://secretmanager.googleapis.com/v1/projects/${{ secrets.PROJECT_ID }}/secrets/my-secret/versions/1:access \
+          curl https://secretmanager.googleapis.com/v1/projects/${{ secrets.PROJECT_ID }}/secrets/gh-runner/versions/1:access \
             --header "Authorization: Bearer ${{ steps.access_token.outputs.access_token }}"
-          echo "Done!!!"    
-          
-
+          echo "Done!!!"         
 
       - name: Initialize Terraform
         run: |
