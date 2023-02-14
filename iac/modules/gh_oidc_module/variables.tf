@@ -87,6 +87,7 @@ variable "attribute_mapping" {
     "attribute.actor"      = "assertion.actor"
     "attribute.aud"        = "assertion.aud"
     "attribute.repository" = "assertion.repository"
+    "attribute.full" = "assertion.repository+assertion.ref"
   }
 }
 
