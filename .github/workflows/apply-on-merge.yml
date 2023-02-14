@@ -2,7 +2,6 @@ name: Plan / Apply On Merge
 
 on:
   push:
-    branches: [ dev ]
   pull_request:
     branches:
       - main
