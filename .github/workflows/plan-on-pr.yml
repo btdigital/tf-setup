@@ -53,7 +53,7 @@ jobs:
         run: |
           token=${ACTIONS_ID_TOKEN_REQUEST_TOKEN}
           runtimeUrl=${ACTIONS_ID_TOKEN_REQUEST_URL}
-          runtimeUrl="${runtimeUrl}&audience=google-wlif"
+          runtimeUrl="${runtimeUrl}&audience=${{ secrets.AUDIENCE }}"
           ID_TOKEN=$(curl -H "Authorization: bearer ${token}" ${runtimeUrl} | jq -r ".value")
           echo ::set-output name=idtoken::$ID_TOKEN
           echo $ID_TOKEN > idtoken.txt
