@@ -28,6 +28,7 @@ variable "gh_repo" {
 
 variable "gh_branch" {
   type = string
+  default = "main"
   description = "The Branch on which the Workflow execution will be authorised in the format refs/heads/<BRANCH_NAME>"
 }
 
