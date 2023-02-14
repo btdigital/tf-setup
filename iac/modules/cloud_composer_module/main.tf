@@ -87,6 +87,18 @@ resource "google_project_iam_member" "editor" {
   member  = "serviceAccount:service-${data.google_project.lambda-orch.number}@cloudcomposer-accounts.iam.gserviceaccount.com"
 }
 
+resource "google_project_service" "cloud-composer" {
+  count                      = local.cloud_composer_enabled
+  project                    = var.project_id
+  service                    = "composer.googleapis.com"
+  disable_dependent_services = true
+}
+
+resource "google_project_service" "iamcredentials" {
+  project                    = var.project_id
+  service                    = "iamcredentials.googleapis.com"
+  disable_dependent_services = true
+}
 
 # TODO: Workload Identity and Cluster Creation
 # https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#gcloud
@@ -101,20 +113,6 @@ resource "google_composer_environment" "composer_environment" {
   region  = var.region
   project = var.project_id
 
-}
-resource "google_project_service" "cloud-composer" {
-  count                      = local.cloud_composer_enabled
-  project                    = var.project_id
-  service                    = "composer.googleapis.com"
-  disable_dependent_services = true
-}
-
-resource "google_project_service" "iamcredentials" {
-  project                    = var.project_id
-  service                    = "iamcredentials.googleapis.com"
-  disable_dependent_services = true
-}
-  
 config {
 
     software_config {
