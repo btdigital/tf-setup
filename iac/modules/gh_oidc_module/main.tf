@@ -20,6 +20,26 @@ resource "google_service_account" "runner_sa" {
   display_name = "Service Account"
 }
 
+data "google_project" "project" {
+  project_id = var.project_id
+}
+
+data "google_iam_policy" "wli_user_ghshr" {
+  binding {
+    role = "roles/iam.workloadIdentityUser"
+
+    members = [
+      "principalSet://iam.googleapis.com/projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/lambda-pool-auth/attribute.full/${var.gh_repo}${var.gh_branch}",
+    ]
+  }
+}
+
+resource "google_service_account_iam_policy" "admin-account-iam" {
+  service_account_id = google_service_account.runner_sa.name
+  policy_data        = data.google_iam_policy.wli_user_ghshr.policy_data
+
+}
+
 resource "google_iam_workload_identity_pool" "github_oidc" {
   provider                  = google-beta
   project                   = var.project_id
@@ -51,19 +71,4 @@ resource "google_iam_workload_identity_pool_provider" "oidc" {
     allowed_audiences = var.allowed_audiences
     issuer_uri        = var.issuer_uri
   }
-}
-
-data "google_iam_policy" "wli_user_ghshr" {
-  binding {
-    role = "roles/iam.workloadIdentityUser"
-
-    members = [
-      "principalSet://iam.googleapis.com/projects/${data.google_service_account.runner_sa.number}/locations/global/workloadIdentityPools/lambda-pool-auth/attribute.full/${var.gh_repo}${var.gh_branch}",
-    ]
-  }
-}
-
-resource "google_service_account_iam_policy" "admin-account-iam" {
-  service_account_id = google_service_account.runner_sa.name
-  policy_data        = data.google_iam_policy.wli_user_ghshr.policy_data
 }
