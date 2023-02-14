@@ -69,7 +69,7 @@ jobs:
       - id: 'gcloud'
         name: 'gcloud'
         run: |-
-          gcloud auth login
+          gcloud auth login --no-launch-browser
           gcloud config set project lambda-377114
           gcloud secrets versions access "latest" --secret "oidc-authentication"
 
