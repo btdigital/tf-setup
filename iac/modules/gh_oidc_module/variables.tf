@@ -91,7 +91,7 @@ variable "attribute_mapping" {
 }
 
 variable "allowed_audiences" {
-  type        = list(string)
+  type        = string
   description = "Workload Identity Pool Provider allowed audiences."
   default     = "google-wlif"
 }
