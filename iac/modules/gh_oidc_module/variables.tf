@@ -93,7 +93,7 @@ variable "attribute_mapping" {
 variable "allowed_audiences" {
   type        = string
   description = "Workload Identity Pool Provider allowed audiences."
-  default     = ""
+  default     = "google-wif"
 }
 
 variable "sa_mapping" {
