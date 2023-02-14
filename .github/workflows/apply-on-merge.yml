@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-    - iac/environment/*
+    - iac/**
 
 concurrency: 
   group: ${{ github.action == 'Google Cloud IaC Create Resources' }}
