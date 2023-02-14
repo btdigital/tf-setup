@@ -17,6 +17,9 @@ jobs:
   inform_about_apply:
     name: Inform About Apply
     runs-on: ubuntu-20.04
+    permissions:
+      id-token: 'write'
+      contents: 'read'
     steps:
       - name: Inform on PR that Apply is Running
         uses: mshick/add-pr-comment@v1
