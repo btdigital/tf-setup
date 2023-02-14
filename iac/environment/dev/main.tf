@@ -9,7 +9,6 @@ terraform {
   }
 }
 
-
 module "oidc" {
   source      = "../../modules/gh_oidc_module"
   project_id  = var.project_id
