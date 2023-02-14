@@ -44,3 +44,15 @@ resource "google_service_account_iam_member" "wif-sa" {
   role               = "roles/iam.workloadIdentityUser"
   member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.main.name}/${each.value.attribute}"
 }
+
+resource "google_service_account" "sa" {
+  project    = var.project_id
+  account_id = "gh-runner"
+  display_name = "Service Account used for GitHub Actions"
+}
+
+resource "google_project_iam_member" "project" {
+  project = var.project_id
+  role    = "roles/storage.admin"
+  member  = "serviceAccount:${google_service_account.sa.email}"
+}

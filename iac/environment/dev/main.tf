@@ -10,6 +10,19 @@ terraform {
 }
 
 
+module "oidc" {
+  source      = "../../modules/gh-oidc_module"
+  project_id  = var.project_id
+  pool_id     = var.pool_id
+  provider_id = var.provider_id
+  sa_mapping = {
+    (google_service_account.sa.account_id) = {
+      sa_name   = google_service_account.sa.name
+      attribute = "attribute.repository/user/repo"
+    }
+  }
+}
+
 # Google Compute Engine: VM
 # Ref: https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance
 module "vm_service" {

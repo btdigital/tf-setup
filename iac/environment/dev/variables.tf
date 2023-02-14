@@ -14,3 +14,15 @@ variable "region" {
   default     = "europe-west6"
   type        = string
 }
+
+variable "pool_id" {
+  type        = string
+  description = "Workload Identity Pool ID"
+  default     = "lambda-pool"
+}
+
+variable "provider_id" {
+  type        = string
+  description = "Workload Identity Pool Provider id"
+  default     = "gh-oidc-provider"
+}

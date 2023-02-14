@@ -26,6 +26,11 @@ variable "repo" {
   default     = "https://github.com/btdigital/tf-setup"
 }
 
+variable "gh_branch" {
+  type = string
+  description = "The Branch on which the Workflow execution will be authorised in the format refs/heads/<BRANCH_NAME>"
+}
+
 variable "pool_id" {
   type        = string
   description = "Workload Identity Pool ID"
@@ -88,7 +93,7 @@ variable "attribute_mapping" {
 variable "allowed_audiences" {
   type        = list(string)
   description = "Workload Identity Pool Provider allowed audiences."
-  default     = []
+  default     = "google-wlif"
 }
 
 variable "sa_mapping" {
