@@ -61,12 +61,7 @@ resource "google_iam_workload_identity_pool_provider" "oidc" {
     "google.subject" = "assertion.sub"
     "attribute.full" = "assertion.repository+assertion.ref"
   }
-  sa_mapping                         = {
-    (google_service_account.runner_sa.account_id) = {
-      sa_name   = google_service_account.runner_sa.name
-      attribute = var.attribute_mapping
-    }
-  }
+
   oidc {
     allowed_audiences = ["google-wif"]
     issuer_uri        = var.issuer_uri
