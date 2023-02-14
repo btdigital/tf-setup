@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+resource "google_service_account" "runner_sa" {
+  project      = var.project_id
+  account_id   = "gh-runner"
+  display_name = "Service Account"
+}
+
 resource "google_iam_workload_identity_pool" "github_oidc" {
   provider                  = google-beta
   project                   = var.project_id
@@ -26,22 +32,25 @@ resource "google_iam_workload_identity_pool" "github_oidc" {
 resource "google_iam_workload_identity_pool_provider" "oidc" {
   provider                           = google-beta
   project                            = var.project_id
-  workload_identity_pool_id          = google_iam_workload_identity_pool.main.workload_identity_pool_id
+  workload_identity_pool_id          = google_iam_workload_identity_pool.lambda-pool-auth.workload_identity_pool_id
   workload_identity_pool_provider_id = var.provider_id
   display_name                       = var.provider_display_name
   description                        = var.provider_description
   attribute_condition                = var.attribute_condition
-  attribute_mapping                  = var.attribute_mapping
+  attribute_mapping                  = {
+    "google.subject" = "assertion.sub"
+    "attribute.full" = "assertion.repository+assertion.ref"
+  }
+  sa_mapping                         = {
+    (google_service_account.runner_sa.account_id) = {
+      sa_name   = google_service_account.runner_sa.name
+      attribute = var.attribute_mapping
+    }
+  }
   oidc {
     allowed_audiences = var.allowed_audiences
     issuer_uri        = var.issuer_uri
   }
-}
-
-resource "google_service_account" "runner_sa" {
-  project      = var.project_id
-  account_id   = "gh-runner"
-  display_name = "Service Account"
 }
 
 data "google_iam_policy" "wli_user_ghshr" {

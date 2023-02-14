@@ -14,12 +14,7 @@ module "oidc" {
   project_id  = var.project_id
   pool_id     = var.pool_id
   provider_id = var.provider_id
-  sa_mapping = {
-    (google_service_account.runner_sa.account_id) = {
-      sa_name   = google_service_account.runner_sa.name
-      attribute = var.attribute_mapping
-    }
-  }
+
 }
 
 # Google Compute Engine: VM
