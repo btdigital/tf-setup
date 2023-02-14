@@ -32,7 +32,7 @@ resource "google_iam_workload_identity_pool" "github_oidc" {
 resource "google_iam_workload_identity_pool_provider" "oidc" {
   provider                           = google-beta
   project                            = var.project_id
-  workload_identity_pool_id          = google_iam_workload_identity_pool.lambda-pool-auth.workload_identity_pool_id
+  workload_identity_pool_id          = google_iam_workload_identity_pool.github_oidc.workload_identity_pool_id
   workload_identity_pool_provider_id = var.provider_id
   display_name                       = var.provider_display_name
   description                        = var.provider_description
@@ -58,7 +58,7 @@ data "google_iam_policy" "wli_user_ghshr" {
     role = "roles/iam.workloadIdentityUser"
 
     members = [
-      "principalSet://iam.googleapis.com/projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/lambda-pool-auth/attribute.full/${var.gh_repo}${var.gh_branch}",
+      "principalSet://iam.googleapis.com/projects/${data.google_service_account.runner_sa.number}/locations/global/workloadIdentityPools/lambda-pool-auth/attribute.full/${var.gh_repo}${var.gh_branch}",
     ]
   }
 }
