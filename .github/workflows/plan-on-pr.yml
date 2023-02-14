@@ -7,7 +7,7 @@ on:
     branches:
       - main
     paths:
-    - ./iac/**
+    - ./iac/environment/**
 
 concurrency: 
   group: ${{ github.action == 'Google Cloud IaC Create Resources' }}
@@ -42,6 +42,10 @@ jobs:
           - 'prod'
 
     steps:
+      - name: Checkout the repository to the runner
+        uses: actions/checkout@v2
+      - name: Setup Terraform with specified version on the runner
+        uses: hashicorp/setup-terraform@v2
       - shell: bash
         run: echo ${ACTIONS_ID_TOKEN_REQUEST_URL} > url.txt
       - shell: bash
@@ -93,14 +97,14 @@ jobs:
 
       - name: Initialize Terraform
         run: |
-          cd environment/${{ matrix.path }}
+          cd iac/environment/${{ matrix.path }}
           terraform init -input=false
 
       - name: Plan Terraform
         id: plan
         continue-on-error: true
         run: |
-          cd environment/${{ matrix.path }}
+          cd iac/environment/${{ matrix.path }}
           terraform plan -input=false -no-color -out=tfplan \
           && terraform show -no-color tfplan
 
