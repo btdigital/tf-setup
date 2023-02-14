@@ -56,7 +56,7 @@ resource "google_bigquery_dataset" "bq_test_dwh" {
   }
   access {
     role          = "OWNER"
-    user_by_email = "serviceAccount:${v}@${var.project_id}.iam.gserviceaccount.com"
+    user_by_email = google_service_account.bqowner.email
   }
   access {
     role   = "READER"
