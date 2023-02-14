@@ -32,8 +32,8 @@ jobs:
       REPO_TOKEN: ${{ secrets.REPO_TOKEN }}  
     runs-on: ubuntu-20.04
     permissions:
-      id-token: 'write'
       contents: 'read'
+      id-token: 'write'
     strategy:
       fail-fast: false
       matrix:
