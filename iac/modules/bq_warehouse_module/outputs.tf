@@ -1,4 +1,4 @@
-output "bq_res" {
-  description = "ID of the VPC"
+output "bq_view" {
+  description = "Map of bigquery view resources being provisioned."
   value       = google_service_account.bqowner 
 }
