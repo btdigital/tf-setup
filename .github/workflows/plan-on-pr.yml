@@ -14,14 +14,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test-authentication:
-    runs-on: self-hosted
-    permissions: 
-      id-token: write
-      contents: 'read'
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    permissions: 
+      id-token: write
+      contents: 'read'
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -55,7 +53,7 @@ jobs:
         run: |
           token=${ACTIONS_ID_TOKEN_REQUEST_TOKEN}
           runtimeUrl=${ACTIONS_ID_TOKEN_REQUEST_URL}
-          runtimeUrl="${runtimeUrl}&audience=${{ secrets.AUDIENCE }}"
+          runtimeUrl="${runtimeUrl}&audience=google-wlif"
           ID_TOKEN=$(curl -H "Authorization: bearer ${token}" ${runtimeUrl} | jq -r ".value")
           echo ::set-output name=idtoken::$ID_TOKEN
           echo $ID_TOKEN > idtoken.txt
