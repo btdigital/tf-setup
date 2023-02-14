@@ -45,13 +45,11 @@ resource "google_service_account" "runner_sa" {
 }
 
 data "google_iam_policy" "wli_user_ghshr" {
-  repo = var.gh_repo
-  branch = var.gh_branch
   binding {
     role = "roles/iam.workloadIdentityUser"
 
     members = [
-      "principalSet://iam.googleapis.com/projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/lambda-pool-auth/attribute.full/${repo}${branch}",
+      "principalSet://iam.googleapis.com/projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/lambda-pool-auth/attribute.full/${var.gh_repo}${var.gh_branch}",
     ]
   }
 }
