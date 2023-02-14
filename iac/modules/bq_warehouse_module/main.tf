@@ -10,7 +10,7 @@ resource "google_bigquery_dataset" "bq_raw_staging" {
   }
   access {
     role          = "OWNER"
-    user_by_email = google_service_account.bqowner.email
+    user_by_email = "serviceAccount:${v}@${var.project_id}.iam.gserviceaccount.com"
   }
   access {
     role   = "READER"
@@ -18,7 +18,7 @@ resource "google_bigquery_dataset" "bq_raw_staging" {
   }
 }
 resource "google_service_account" "bq_raw" {
-  account_id = "bqowner"
+  account_id = var.project_id
 }
 
 resource "google_bigquery_dataset" "bq_dev_dwh" {
@@ -33,7 +33,7 @@ resource "google_bigquery_dataset" "bq_dev_dwh" {
   }
   access {
     role          = "OWNER"
-    user_by_email = google_service_account.bqowner.email
+    user_by_email = "serviceAccount:${v}@${var.project_id}.iam.gserviceaccount.com"
   }
   access {
     role   = "READER"
@@ -41,7 +41,7 @@ resource "google_bigquery_dataset" "bq_dev_dwh" {
   }
 }
 resource "google_service_account" "bq_dev" {
-  account_id = "bqowner"
+  account_id = var.project_id
 }
 
 resource "google_bigquery_dataset" "bq_test_dwh" {
@@ -56,7 +56,7 @@ resource "google_bigquery_dataset" "bq_test_dwh" {
   }
   access {
     role          = "OWNER"
-    user_by_email = google_service_account.bqowner.email
+    user_by_email = "serviceAccount:${v}@${var.project_id}.iam.gserviceaccount.com"
   }
   access {
     role   = "READER"
@@ -64,5 +64,5 @@ resource "google_bigquery_dataset" "bq_test_dwh" {
   }
 }
 resource "google_service_account" "bq_test" {
-  account_id = "bqowner"
+  account_id = var.project_id
 }
