@@ -58,19 +58,19 @@ jobs:
 
         with:
           version: "latest"
-          token_format: 'access_token'
           workload_identity_provider: 'projects/157381548024/locations/global/workloadIdentityPools/lambda-pool-auth/providers/gh-oidc-provider'
           service_account: "lambda-arch-project@lambda-377114.iam.gserviceaccount.com"
-          access_token_lifetime: '300s'
 
         # Install gcloud, `setup-gcloud` automatically picks up authentication from `auth`.
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
 
-      - id: 'access-secret'
+        # Now you can run gcloud commands authenticated as the impersonated service account.
+      - id: 'gcloud'
+        name: 'gcloud'
         run: |-
-          curl https://secretmanager.googleapis.com/v1/projects/my-project/secrets/my-secret/versions/1:access \
-            --header "Authorization: Bearer ${{ steps.auth.outputs.access_token }}
+          gcloud config set project lambda-377114
+          gcloud secrets versions access "latest" --secret "oidc-authentication"
 
       - name: Initialize Terraform
         run: |
