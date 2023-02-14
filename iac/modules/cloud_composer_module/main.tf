@@ -1,3 +1,14 @@
+terraform {
+  required_version = ">= 1.0"
+
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+      version = "4.13.0"
+    }
+  }
+}
+
 data "google_project" "lambda-orch" {
   project_id = var.project_id
 }
@@ -110,10 +121,9 @@ resource "google_project_service" "cloud-composer" {
 
 resource "google_project_service" "iamcredentials" {
   project                    = var.project_id
-  service                    = "iam.googleapis.com"
+  service                    = "iamcredentials.googleapis.com"
   disable_dependent_services = true
 }
-
   config {
 
     software_config {

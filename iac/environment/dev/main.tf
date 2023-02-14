@@ -30,11 +30,11 @@ module "cloud-composer" {
   count      = local.cloud_composer_enabled
   project_id = local.project_id
   region     = var.region
-  depends_on = [google_project_service.cloud-composer]
+  depends_on = [google_project_service.iamcredentials, google_project_service.cloud-composer]
 }
 
 # Data ware house : DWH
-# Ref: https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/bigquery_dataset
+# Ref: https://registry,.terraform.io/providers/hashicorp/google/latest/docs/resources/bigquery_dataset
 module "bq_dataset" {
   source = "../../modules/bq_warehouse_module"
   depends_on = [google_service_account.bqowner]
