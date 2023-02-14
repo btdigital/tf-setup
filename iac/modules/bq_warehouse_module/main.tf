@@ -6,7 +6,7 @@ resource "google_bigquery_dataset" "bq_raw_staging" {
   default_table_expiration_ms = 2592000000
   access {
       role = "OWNER"
-      user_by_email = "serviceAccount:${v}@${var.project}.iam.gserviceaccount.com"
+      user_by_email = "serviceAccount:${v}@${var.project_id}.iam.gserviceaccount.com"
     }
   delete_contents_on_destroy = true
 }
@@ -18,7 +18,7 @@ resource "google_bigquery_dataset" "bq_dev_dwh" {
   default_table_expiration_ms = 2592000000
   access {
       role = "OWNER"
-      user_by_email = "serviceAccount:${v}@${var.project}.iam.gserviceaccount.com"
+      user_by_email = "serviceAccount:${v}@${var.project_id}.iam.gserviceaccount.com"
     }
   delete_contents_on_destroy = true
 }
@@ -31,7 +31,7 @@ resource "google_bigquery_dataset" "bq_test_dwh" {
   default_table_expiration_ms = 2592000000
   access {
       role = "OWNER"
-      user_by_email = "serviceAccount:${v}@${var.project}.iam.gserviceaccount.com"
+      user_by_email = "serviceAccount:${v}@${var.project_id}.iam.gserviceaccount.com"
     }
   delete_contents_on_destroy = true
 }
