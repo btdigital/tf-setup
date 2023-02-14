@@ -1,14 +1,3 @@
-terraform {
-  required_version = ">= 1.0"
-
-  required_providers {
-    google = {
-      source = "hashicorp/google"
-      version = "4.13.0"
-    }
-  }
-}
-
 resource "google_project_service" "iamcredentials" {
   project                    = var.project_id
   service                    = "iamcredentials.googleapis.com"

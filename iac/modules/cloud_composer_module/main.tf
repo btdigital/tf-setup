@@ -1,14 +1,3 @@
-terraform {
-  required_version = ">= 1.0"
-
-  required_providers {
-    google = {
-      source = "hashicorp/google"
-      version = "4.13.0"
-    }
-  }
-}
-
 data "google_project" "lambda-orch" {
   project_id = var.project_id
 }
