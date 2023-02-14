@@ -37,5 +37,4 @@ module "cloud-composer" {
 # Ref: https://registry,.terraform.io/providers/hashicorp/google/latest/docs/resources/bigquery_dataset
 module "bq_dataset" {
   source = "../../modules/bq_warehouse_module"
-  depends_on = [google_service_account.bqowner]
 }
