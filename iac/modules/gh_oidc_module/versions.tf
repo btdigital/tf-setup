@@ -23,12 +23,7 @@ terraform {
       version = "4.13.0"
     }
   }
-  
-    google-beta = {
-      source  = "hashicorp/google-beta"
-      version = ">= 3.64, < 5.0.0"
-    }
-  
 
-
-
+provider "google-beta" {
+    region      = "europe-west1"
+}
