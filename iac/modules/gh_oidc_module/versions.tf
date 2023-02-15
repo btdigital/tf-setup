@@ -26,6 +26,7 @@ terraform {
 }
 
 provider "google-beta" {
-    region      = "europe-west6"
+  project_id = var.project_id
+  region      = "europe-west6"
 }
 
