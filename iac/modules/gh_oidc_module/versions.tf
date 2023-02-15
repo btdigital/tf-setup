@@ -27,6 +27,5 @@ terraform {
 
 provider "google-beta" {
     region      = "europe-west6"
-    module_name = "blueprints/terraform/terraform-google-github-actions-runners:gh-oidc/v3.1.1"
 }
 
