@@ -108,7 +108,7 @@ resource "google_composer_environment" "composer_environment" {
   region  = var.region
   project = var.project_id
 
-config {
+  config {
 
     software_config {
       image_version = "composer-2-airflow-2"

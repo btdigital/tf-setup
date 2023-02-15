@@ -1,9 +1,9 @@
 output "composer_enabled" {
-  description = "Map of bigquery view resources being provisioned."
+  description = "composer uri and project id."
   value       = google_project_service.cloud-composer
 }
 
 output "composer_iamcredentials" {
-  description = "Map of bigquery view resources being provisioned."
+  description = "composer authenication."
   value       = google_project_service.iamcredentials
 }
