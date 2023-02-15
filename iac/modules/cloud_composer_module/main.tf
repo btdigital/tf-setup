@@ -4,10 +4,12 @@ data "google_project" "lambda-orch" {
 
 # Enable API Services
 resource "google_project_service" "cloud-composer" {
+  count                      = local.cloud_composer_enabled
   project                    = var.project_id
   service                    = "composer.googleapis.com"
   disable_dependent_services = true
 }
+
 
 resource "google_project_service" "iam" {
   project                    = var.project_id
@@ -85,13 +87,6 @@ resource "google_project_iam_member" "editor" {
   project = var.project_id
   role    = "roles/editor"
   member  = "serviceAccount:service-${data.google_project.lambda-orch.number}@cloudcomposer-accounts.iam.gserviceaccount.com"
-}
-
-resource "google_project_service" "cloud-composer" {
-  count                      = local.cloud_composer_enabled
-  project                    = var.project_id
-  service                    = "composer.googleapis.com"
-  disable_dependent_services = true
 }
 
 resource "google_project_service" "iamcredentials" {
