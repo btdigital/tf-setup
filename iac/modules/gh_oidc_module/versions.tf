@@ -32,7 +32,4 @@ provider "google-beta" {
     region      = "europe-west6"
 }
 
-provider_meta "google-beta" {
-    module_name = "blueprints/terraform/terraform-google-github-actions-runners:gh-oidc/v3.1.1"
-  }
 
