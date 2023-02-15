@@ -15,15 +15,18 @@
  */
 
 terraform {
-  required_version = ">= 0.13"
-  required_providers {
+  required_version = ">= 1.0"
 
-     google = {
+  required_providers {
+    google = {
       source = "hashicorp/google"
       version = "4.13.0"
     }
   }
+}
 
 provider "google-beta" {
-    region      = "europe-west1"
+    region      = "europe-west6"
+    module_name = "blueprints/terraform/terraform-google-github-actions-runners:gh-oidc/v3.1.1"
 }
+
