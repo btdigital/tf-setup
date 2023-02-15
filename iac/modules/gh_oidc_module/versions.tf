@@ -24,9 +24,13 @@ terraform {
     }
   }
 }
+provider "google" {
+  project     = "lambda-377114"
+  region      = "europe-west6"
+}
 
 provider "google-beta" {
-  project_id = var.project_id
+  project_id  = "lambda-377114"
   region      = "europe-west6"
 }
 
