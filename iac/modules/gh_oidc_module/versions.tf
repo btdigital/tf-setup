@@ -27,9 +27,6 @@ terraform {
       version = ">= 3.64, < 5.0.0"
     }
   }
-}
-provider "google-beta" {
-    region      = "europe-west6"
-}
+
 
 
