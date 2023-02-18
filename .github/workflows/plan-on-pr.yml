@@ -100,7 +100,6 @@ jobs:
 
       - name: Initialize Terraform
         run: |
-          gcloud auth application-default login
           cd iac/environment/${{ matrix.path }}
           terraform init -upgrade -input=false
 
