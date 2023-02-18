@@ -101,7 +101,7 @@ jobs:
       - name: Initialize Terraform
         run: |
           cd iac/environment/${{ matrix.path }}
-          terraform init -input=false
+          terraform init -upgrade -input=false
 
       - name: Plan Terraform
         id: plan
