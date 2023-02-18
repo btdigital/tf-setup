@@ -15,12 +15,6 @@ variable "region" {
   type        = string
 }
 
-variable "gcp_credentials" {
-  type = string
-  sensitive = true
-  description = "Google Cloud service account credentials"
-}
-
 variable "pool_id" {
   type        = string
   description = "Workload Identity Pool ID"
