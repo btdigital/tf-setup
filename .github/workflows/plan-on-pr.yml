@@ -107,6 +107,7 @@ jobs:
         id: plan
         continue-on-error: true
         run: |
+          gcloud auth application-default login
           cd iac/environment/${{ matrix.path }}
           terraform plan -input=false -no-color -out=tfplan \
           && terraform show -no-color tfplan
