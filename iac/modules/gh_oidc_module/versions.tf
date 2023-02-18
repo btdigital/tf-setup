@@ -30,7 +30,6 @@ provider "google" {
 }
 
 provider "google-beta" {
-  project_id  = "lambda-377114"
   region      = "europe-west6"
 }
 
