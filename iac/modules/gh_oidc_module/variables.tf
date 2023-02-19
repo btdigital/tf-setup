@@ -20,7 +20,13 @@ variable "project_id" {
   default     = "lambda-377114"
 }
 
-variable "repo" {
+variable "region" {
+  description = "Region for GCP resources. Choose as per your location: https://cloud.google.com/about/locations"
+  default     = "europe-west6"
+  type        = string
+}
+
+variable "gh_repo" {
   type        = string
   description = "The project repo to create Workload Identity Pool"
   default     = "https://github.com/btdigital/tf-setup"
@@ -28,6 +34,7 @@ variable "repo" {
 
 variable "gh_branch" {
   type = string
+  default = "main"
   description = "The Branch on which the Workflow execution will be authorised in the format refs/heads/<BRANCH_NAME>"
 }
 
@@ -87,13 +94,14 @@ variable "attribute_mapping" {
     "attribute.actor"      = "assertion.actor"
     "attribute.aud"        = "assertion.aud"
     "attribute.repository" = "assertion.repository"
+    "attribute.full" = "assertion.repository+assertion.ref"
   }
 }
 
 variable "allowed_audiences" {
   type        = string
   description = "Workload Identity Pool Provider allowed audiences."
-  default     = "google-wlif"
+  default = ""
 }
 
 variable "sa_mapping" {

@@ -26,3 +26,15 @@ variable "provider_id" {
   description = "Workload Identity Pool Provider id"
   default     = "gh-oidc-provider"
 }
+
+variable "attribute_mapping" {
+  type        = map(any)
+  description = "Workload Identity Pool Provider attribute mapping. [More info](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/iam_workload_identity_pool_provider#attribute_mapping)"
+  default     = {
+    "google.subject"       = "assertion.sub"
+    "attribute.actor"      = "assertion.actor"
+    "attribute.aud"        = "assertion.aud"
+    "attribute.repository" = "assertion.repository"
+    "attribute.full"       = "assertion.repository+assertion.ref"
+  }
+}
