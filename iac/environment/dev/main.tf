@@ -1,14 +1,3 @@
-terraform {
-  required_version = ">= 1.0"
-
-  required_providers {
-    google = {
-      source = "hashicorp/google"
-      version = "3.11.0"
-    }
-  }
-}
-
 module "oidc" {
   source      = "../../modules/gh_oidc_module"
   project_id  = var.project_id
