@@ -16,7 +16,7 @@ concurrency:
 jobs:
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -29,7 +29,7 @@ jobs:
     name: Plan
     env:
       REPO_TOKEN: ${{ secrets.REPO_TOKEN }}    
-    runs-on: ubuntu-20.04
+    runs-on: self-hosted
     permissions:
       contents: 'read' 
       id-token: 'write'
@@ -139,7 +139,7 @@ jobs:
             ```
   slack_notification:
     name: 'Slack Notification'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [Plan]
     if: always()
 
